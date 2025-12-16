@@ -1,0 +1,5 @@
+{
+  "name": "MicroERP",
+  "description": "A basic ERP system for small businesses featuring Accounting, Finance, and modular architecture using IndexedDB.",
+  "requestFramePermissions": []
+}
