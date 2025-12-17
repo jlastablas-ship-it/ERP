@@ -6,6 +6,7 @@ import { AccountingMaster, AccountingProcess, AccountingTransactions } from './m
 import { FinanceMaster, FinanceProcess, FinanceTransactions } from './modules/Finance';
 import { DbConfig } from './modules/Configuration';
 import { StructureView, UsersView, SecurityView } from './modules/Administration';
+import { IntegrationView } from './modules/Integration';
 
 // Generic Wrapper to show Nav + Content
 const ModuleWrapper = ({ baseUrl }: { baseUrl: string }) => {
@@ -62,7 +63,9 @@ const App: React.FC = () => {
           <Route path="/modules/compras/*" element={<ModuleWrapper baseUrl="/modules/compras" />} >
              <Route path="*" element={<UnderConstruction />} />
           </Route>
-          <Route path="/modules/integracion" element={<UnderConstruction />} />
+          
+          {/* Module: Integration */}
+          <Route path="/modules/integracion" element={<IntegrationView />} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/admin/structure" replace />} />
