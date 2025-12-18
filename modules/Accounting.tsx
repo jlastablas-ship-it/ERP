@@ -39,64 +39,68 @@ export const AccountingMaster: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-slate-800">Plan Contable</h2>
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+        <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <Calculator className="text-blue-600" /> Plan Contable
+        </h2>
         <button 
             onClick={() => { setFormData({ subcuenta: '0000', clasificacion: AccountClassification.ACTIVO }); setIsEditing(true); }}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold shadow-sm shadow-blue-200"
         >
-            <Plus size={16} /> Nueva Cuenta
+            <Plus size={18} /> Nueva Cuenta
         </button>
       </div>
 
       {isEditing && (
-        <div className="mb-6 p-4 bg-slate-50 rounded border border-blue-200 grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Cuenta (4 dígitos)</label>
-            <input 
-              type="text" maxLength={4} placeholder="0000"
-              className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-              value={formData.cuenta || ''} onChange={e => setFormData({...formData, cuenta: e.target.value})}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Subcuenta (4 dígitos)</label>
-            <input 
-              type="text" maxLength={4} placeholder="0000"
-              className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-              value={formData.subcuenta || ''} onChange={e => setFormData({...formData, subcuenta: e.target.value})}
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-slate-700">Descripción</label>
-            <input 
-              type="text"
-              className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-              value={formData.descripcion || ''} onChange={e => setFormData({...formData, descripcion: e.target.value})}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Código Externo</label>
-            <input 
-              type="text"
-              className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-              value={formData.codigoExterno || ''} onChange={e => setFormData({...formData, codigoExterno: e.target.value})}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Clasificación</label>
-            <select 
-              className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 bg-white"
-              value={formData.clasificacion} 
-              onChange={e => setFormData({...formData, clasificacion: e.target.value as any})}
-            >
-              {Object.values(AccountClassification).map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </div>
-          <div className="md:col-span-2 flex justify-end gap-2 mt-2">
-            <button onClick={() => setIsEditing(false)} className="px-4 py-2 text-slate-600 hover:text-slate-800">Cancelar</button>
-            <button onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Guardar</button>
+        <div className="p-6 bg-blue-50/50 border-b border-blue-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Cuenta (4 dígitos)*</label>
+              <input 
+                type="text" maxLength={4} pattern="\d{4}"
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                value={formData.cuenta || ''} onChange={e => setFormData({...formData, cuenta: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Subcuenta (4 dígitos)*</label>
+              <input 
+                type="text" maxLength={4} pattern="\d{4}"
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                value={formData.subcuenta || ''} onChange={e => setFormData({...formData, subcuenta: e.target.value})}
+              />
+            </div>
+            <div className="lg:col-span-1">
+               <label className="block text-sm font-semibold text-slate-700 mb-1">Clasificación</label>
+                <select 
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+                value={formData.clasificacion} 
+                onChange={e => setFormData({...formData, clasificacion: e.target.value as any})}
+                >
+                {Object.values(AccountClassification).map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Descripción*</label>
+              <input 
+                type="text"
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                value={formData.descripcion || ''} onChange={e => setFormData({...formData, descripcion: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Código Externo</label>
+              <input 
+                type="text"
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                value={formData.codigoExterno || ''} onChange={e => setFormData({...formData, codigoExterno: e.target.value})}
+              />
+            </div>
+            <div className="md:col-span-3 flex justify-end gap-3 pt-4 border-t border-blue-100">
+              <button onClick={() => setIsEditing(false)} className="px-5 py-2 text-slate-600 hover:text-slate-800 font-medium">Cancelar</button>
+              <button onClick={handleSave} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold">Guardar Cambios</button>
+            </div>
           </div>
         </div>
       )}
@@ -105,35 +109,41 @@ export const AccountingMaster: React.FC = () => {
         <table className="min-w-full divide-y divide-slate-200">
           <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Cuenta</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Sub</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Descripción</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Clasificación</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Cuenta</th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Sub</th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Descripción</th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Clasificación</th>
+              <th className="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">Acciones</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-slate-200">
+          <tbody className="bg-white divide-y divide-slate-100">
             {accounts?.map(acc => (
-              <tr key={acc.id} className="hover:bg-slate-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{acc.cuenta}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{acc.subcuenta}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{acc.descripcion}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                        ${acc.clasificacion === 'Activo' ? 'bg-green-100 text-green-800' : 
-                          acc.clasificacion === 'Pasivo' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
+              <tr key={acc.id} className="hover:bg-slate-50 transition-colors">
+                <td className="px-6 py-4 whitespace-nowrap font-mono text-sm font-bold text-slate-700">{acc.cuenta}</td>
+                <td className="px-6 py-4 whitespace-nowrap font-mono text-sm text-slate-500">{acc.subcuenta}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-800">{acc.descripcion}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider
+                        ${acc.clasificacion === 'Activo' ? 'bg-green-100 text-green-700' : 
+                          acc.clasificacion === 'Pasivo' ? 'bg-red-100 text-red-700' : 
+                          acc.clasificacion === 'Ingresos' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-700'}
+                    `}>
                         {acc.clasificacion}
                     </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button onClick={() => { setFormData(acc); setIsEditing(true); }} className="text-blue-600 hover:text-blue-900 mr-3"><Edit size={18}/></button>
-                  <button onClick={() => acc.id && handleDelete(acc.id)} className="text-red-600 hover:text-red-900"><Trash2 size={18}/></button>
+                  <button onClick={() => { setFormData(acc); setIsEditing(true); }} className="text-blue-500 hover:text-blue-800 p-2 rounded-lg hover:bg-blue-50 transition mr-1"><Edit size={18}/></button>
+                  <button onClick={() => acc.id && handleDelete(acc.id)} className="text-red-400 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition"><Trash2 size={18}/></button>
                 </td>
               </tr>
             ))}
-            {accounts?.length === 0 && <tr><td colSpan={5} className="px-6 py-4 text-center text-slate-400">No hay cuentas registradas.</td></tr>}
           </tbody>
         </table>
+        {(!accounts || accounts.length === 0) && (
+            <div className="py-20 text-center text-slate-400 font-medium bg-slate-50/50 italic">
+                No se han encontrado registros en el plan contable.
+            </div>
+        )}
       </div>
     </div>
   );
@@ -142,7 +152,7 @@ export const AccountingMaster: React.FC = () => {
 // --- Process: Journal Entry ---
 export const AccountingProcess: React.FC = () => {
   const accounts = useLiveQuery(() => db.accounts.toArray());
-  const [lines, setLines] = useState<Partial<JournalEntryLine>[] >([{}, {}]); // Start with 2 lines
+  const [lines, setLines] = useState<Partial<JournalEntryLine>[] >([{}, {}]);
 
   const addLine = () => setLines([...lines, {}]);
   const removeLine = (idx: number) => setLines(lines.filter((_, i) => i !== idx));
@@ -158,11 +168,11 @@ export const AccountingProcess: React.FC = () => {
   };
 
   const totalValue = lines.reduce((sum, line) => sum + (Number(line.valor) || 0), 0);
-  const isBalanced = Math.abs(totalValue) < 0.01;
+  const isBalanced = Math.abs(totalValue) < 0.001;
 
   const handleSaveEntry = async () => {
     if (!isBalanced) return alert('El asiento no está cuadrado');
-    if (lines.some(l => !l.accountId || !l.valor)) return alert('Complete todas las líneas');
+    if (lines.some(l => !l.accountId || !l.valor)) return alert('Complete todas las líneas requeridas');
 
     const entry: JournalEntry = {
         timestamp: new Date().toISOString(),
@@ -177,83 +187,94 @@ export const AccountingProcess: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6 max-w-4xl mx-auto">
-        <h2 className="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
-            <Calculator className="text-blue-600" />
-            Grabar Entrada Asiento
-        </h2>
-
-        <div className="space-y-4 mb-6">
-            <div className="grid grid-cols-12 gap-2 text-sm font-semibold text-slate-500 uppercase bg-slate-50 p-2 rounded">
-                <div className="col-span-4">Cuenta</div>
-                <div className="col-span-5">Descripción</div>
-                <div className="col-span-2 text-right">Valor</div>
-                <div className="col-span-1"></div>
-            </div>
-
-            {lines.map((line, idx) => (
-                <div key={idx} className="grid grid-cols-12 gap-2 items-center">
-                    <div className="col-span-4">
-                        <select 
-                            className="w-full border-slate-300 rounded-md shadow-sm text-sm p-2 border"
-                            value={line.accountId || ''}
-                            onChange={e => updateLine(idx, 'accountId', Number(e.target.value))}
-                        >
-                            <option value="">Seleccionar Cuenta</option>
-                            {accounts?.map(acc => (
-                                <option key={acc.id} value={acc.id}>
-                                    {acc.cuenta}-{acc.subcuenta} {acc.descripcion}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="col-span-5">
-                        <input 
-                            type="text" 
-                            className="w-full border-slate-300 rounded-md shadow-sm text-sm p-2 border"
-                            placeholder="Descripción del movimiento"
-                            value={line.descripcion || ''}
-                            onChange={e => updateLine(idx, 'descripcion', e.target.value)}
-                        />
-                    </div>
-                    <div className="col-span-2">
-                        <input 
-                            type="number" step="0.01"
-                            className="w-full border-slate-300 rounded-md shadow-sm text-sm p-2 border text-right"
-                            placeholder="0.00"
-                            value={line.valor || ''}
-                            onChange={e => updateLine(idx, 'valor', Number(e.target.value))}
-                        />
-                    </div>
-                    <div className="col-span-1 text-center">
-                        <button onClick={() => removeLine(idx)} className="text-slate-400 hover:text-red-500">
-                            <Trash2 size={16} />
-                        </button>
-                    </div>
-                </div>
-            ))}
+    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+        <div className="px-6 py-5 bg-slate-900 text-white flex items-center gap-3">
+            <Calculator className="text-blue-400" />
+            <h2 className="text-xl font-bold">Grabar Entrada de Asiento</h2>
         </div>
 
-        <button onClick={addLine} className="flex items-center gap-1 text-sm text-blue-600 font-medium hover:underline mb-8">
-            <Plus size={16} /> Añadir Línea
-        </button>
-
-        <div className="border-t border-slate-200 pt-4 flex flex-col md:flex-row justify-between items-center bg-slate-50 p-4 rounded-lg">
-            <div className="flex items-center gap-4 mb-4 md:mb-0">
-                <div className={`flex items-center gap-2 ${isBalanced ? 'text-green-600' : 'text-red-600'}`}>
-                    {isBalanced ? <AlertCircle size={20} className="transform rotate-180"/> : <AlertCircle size={20} />}
-                    <span className="font-bold">Total: {totalValue.toFixed(2)}</span>
+        <div className="p-6">
+            <div className="mb-6 space-y-3">
+                <div className="grid grid-cols-12 gap-4 px-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    <div className="col-span-5">Cuenta</div>
+                    <div className="col-span-4">Descripción</div>
+                    <div className="col-span-2 text-right">Valor</div>
+                    <div className="col-span-1"></div>
                 </div>
-                {!isBalanced && <span className="text-xs text-red-500">(Debe ser 0)</span>}
+
+                {lines.map((line, idx) => (
+                    <div key={idx} className="grid grid-cols-12 gap-4 items-center bg-slate-50 p-2 rounded-xl border border-slate-100 hover:border-slate-300 transition-colors">
+                        <div className="col-span-5">
+                            <select 
+                                className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white shadow-sm"
+                                value={line.accountId || ''}
+                                onChange={e => updateLine(idx, 'accountId', Number(e.target.value))}
+                            >
+                                <option value="">Seleccionar Cuenta...</option>
+                                {accounts?.map(acc => (
+                                    <option key={acc.id} value={acc.id}>
+                                        {acc.cuenta}-{acc.subcuenta} {acc.descripcion}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-span-4">
+                            <input 
+                                type="text" 
+                                className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none shadow-sm"
+                                placeholder="Concepto..."
+                                value={line.descripcion || ''}
+                                onChange={e => updateLine(idx, 'descripcion', e.target.value)}
+                            />
+                        </div>
+                        <div className="col-span-2">
+                            <input 
+                                type="number" step="0.01"
+                                className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none text-right shadow-sm font-mono font-bold"
+                                placeholder="0.00"
+                                value={line.valor || ''}
+                                onChange={e => updateLine(idx, 'valor', Number(e.target.value))}
+                            />
+                        </div>
+                        <div className="col-span-1 flex justify-center">
+                            <button onClick={() => removeLine(idx)} className="p-2 text-red-400 hover:text-red-700 hover:bg-red-50 rounded-lg transition">
+                                <Trash2 size={16} />
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
+
             <button 
-                onClick={handleSaveEntry}
-                disabled={!isBalanced}
-                className={`flex items-center gap-2 px-6 py-2 rounded shadow-sm text-white font-medium transition
-                    ${isBalanced ? 'bg-green-600 hover:bg-green-700' : 'bg-slate-400 cursor-not-allowed'}`}
+                onClick={addLine} 
+                className="flex items-center gap-2 text-blue-600 font-bold text-sm hover:bg-blue-50 px-4 py-2 rounded-lg transition border border-transparent hover:border-blue-100"
             >
-                <Save size={18} /> Grabar Asiento
+                <Plus size={18} /> Añadir Apunte
             </button>
+
+            <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-6">
+                <div className={`flex items-center gap-4 px-6 py-3 rounded-2xl border-2 transition-all duration-300 ${isBalanced ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-200 text-red-700'}`}>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] uppercase font-black tracking-widest opacity-70">Balance Total</span>
+                        <span className="text-2xl font-black font-mono leading-none">{totalValue.toFixed(2)} €</span>
+                    </div>
+                    {isBalanced ? (
+                        <div className="bg-green-500 text-white p-1.5 rounded-full shadow-lg shadow-green-200"><Save size={20} /></div>
+                    ) : (
+                        <div className="animate-pulse bg-red-500 text-white p-1.5 rounded-full shadow-lg shadow-red-200"><AlertCircle size={20} /></div>
+                    )}
+                </div>
+                
+                <button 
+                    onClick={handleSaveEntry}
+                    disabled={!isBalanced}
+                    className={`px-10 py-4 rounded-xl font-black text-lg shadow-xl transition-all active:scale-95
+                        ${isBalanced ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-200 cursor-pointer' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}
+                    `}
+                >
+                    {isBalanced ? 'Grabar Asiento Contable' : 'Asiento Descuadrado'}
+                </button>
+            </div>
         </div>
     </div>
   );
@@ -264,42 +285,59 @@ export const AccountingTransactions: React.FC = () => {
     const entries = useLiveQuery(() => db.journalEntries.orderBy('timestamp').reverse().toArray());
 
     return (
-        <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-            <h2 className="text-xl font-semibold text-slate-800 mb-4">Transacciones Registradas</h2>
-            <div className="space-y-6">
+        <div className="space-y-8">
+            <h2 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
+               <span className="w-10 h-10 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl shadow-sm border border-blue-200"><Calculator size={20}/></span>
+               Libro Diario
+            </h2>
+            
+            <div className="grid grid-cols-1 gap-8">
                 {entries?.map(entry => (
-                    <div key={entry.id} className="border rounded-md overflow-hidden">
-                        <div className="bg-slate-100 px-4 py-2 flex justify-between text-sm text-slate-600">
-                            <span>ID: {entry.id}</span>
-                            <span>{new Date(entry.timestamp).toLocaleString()}</span>
+                    <div key={entry.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
+                        <div className="bg-slate-50 px-6 py-4 flex flex-wrap justify-between items-center gap-4 border-b border-slate-100">
+                            <div className="flex items-center gap-4">
+                                <span className="bg-slate-800 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Asiento #{entry.id}</span>
+                                <span className="text-sm font-semibold text-slate-500">{new Date(entry.timestamp).toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center gap-4 text-sm font-bold">
+                                <span className="text-green-600">Debe: {entry.totalDebit.toFixed(2)} €</span>
+                                <span className="text-red-600">Haber: {entry.totalCredit.toFixed(2)} €</span>
+                            </div>
                         </div>
-                        <table className="min-w-full text-sm">
-                            <thead className="bg-slate-50 border-b">
-                                <tr>
-                                    <th className="px-4 py-2 text-left font-medium text-slate-500">Cuenta</th>
-                                    <th className="px-4 py-2 text-left font-medium text-slate-500">Descripción</th>
-                                    <th className="px-4 py-2 text-right font-medium text-slate-500">Debe</th>
-                                    <th className="px-4 py-2 text-right font-medium text-slate-500">Haber</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {entry.lines.map((line, i) => (
-                                    <tr key={i} className="border-b last:border-0">
-                                        <td className="px-4 py-2 text-slate-800">{line.accountLabel}</td>
-                                        <td className="px-4 py-2 text-slate-600">{line.descripcion}</td>
-                                        <td className="px-4 py-2 text-right text-slate-700">
-                                            {line.valor > 0 ? line.valor.toFixed(2) : '-'}
-                                        </td>
-                                        <td className="px-4 py-2 text-right text-slate-700">
-                                            {line.valor < 0 ? Math.abs(line.valor).toFixed(2) : '-'}
-                                        </td>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y divide-slate-100">
+                                <thead className="bg-slate-50/50">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Cuenta Contable</th>
+                                        <th className="px-6 py-3 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Descripción / Concepto</th>
+                                        <th className="px-6 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Debe</th>
+                                        <th className="px-6 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Haber</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-slate-100">
+                                    {entry.lines.map((line, i) => (
+                                        <tr key={i} className="hover:bg-slate-50/50 transition-colors">
+                                            <td className="px-6 py-3 whitespace-nowrap text-sm font-bold text-slate-700">{line.accountLabel}</td>
+                                            <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-500 italic">{line.descripcion}</td>
+                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-mono font-bold text-green-600">
+                                                {line.valor > 0 ? line.valor.toFixed(2) : '-'}
+                                            </td>
+                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-mono font-bold text-red-600">
+                                                {line.valor < 0 ? Math.abs(line.valor).toFixed(2) : '-'}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 ))}
-                {entries?.length === 0 && <p className="text-center text-slate-400">No hay transacciones registradas.</p>}
+                {(!entries || entries.length === 0) && (
+                    <div className="py-20 text-center bg-white rounded-2xl border-2 border-dashed border-slate-200">
+                        <Calculator size={48} className="mx-auto text-slate-200 mb-4" />
+                        <p className="text-slate-400 font-bold uppercase tracking-widest text-sm">No se han registrado asientos en el diario.</p>
+                    </div>
+                )}
             </div>
         </div>
     );
